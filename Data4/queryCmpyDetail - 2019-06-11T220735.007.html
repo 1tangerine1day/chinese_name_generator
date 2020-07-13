@@ -1,0 +1,2380 @@
+
+ 
+
+
+ 
+<!DOCTYPE html>
+<html>
+
+
+	
+
+
+	
+
+
+
+
+
+
+	
+	
+		
+
+<input type="hidden" name="errorMessage" value="" id="errorMessage"/>
+<head>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!--     <meta http-equiv="X-Frame-Options" content="SAMEORIGIN"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>商工登記公示資料查詢服務</title>
+    
+    <link rel="shortcut icon" href="/favicon.ico" />	<!-- analytics start -->
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	
+	  ga('create', 'UA-44085530-3', 'auto');
+	  ga('send', 'pageview');
+	</script>
+	<!-- analytics end -->
+
+	<script type='text/javascript' src='/fts/fts/js/jquery-2.2.4.min.js' crossorigin='anonymous'></script>
+	
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" type="text/css" href="/fts/fts/css/bootstrap.min.css" />
+    
+    <!-- Sweet Alert CSS -->
+    <link rel="stylesheet" type="text/css" href="/fts/fts/css/sweetalert.css" />
+
+    <!-- Custom CSS -->
+    <style>
+    body {
+ 		padding: 5px 0 150px 0;
+ 		font-size: 15px;
+		font-family:"微軟正黑體", "新細明體", "Arial Unicode MS" !important;
+		background: url(/fts/fts/images/searchTopBg.png) right top fixed no-repeat;
+		
+        /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    }
+    .carousel-control {
+    	opacity: .7;
+    }
+    .carousel-control.left {
+    	background-image:linear-gradient(to right,rgba(0,0,0,.00001) 0,rgba(0,0,0,.00001) 100%);
+    	background-image:webkit-linear-gradient(to right,rgba(0,0,0,.00001) 0,rgba(0,0,0,.00001) 100%);
+    	background-image:webkit-gradient(to right,rgba(0,0,0,.00001) 0,rgba(0,0,0,.00001) 100%);
+    }
+    .carousel-control.right {
+    	background-image:linear-gradient(to left,rgba(0,0,0,.00001) 0,rgba(0,0,0,.00001) 100%);
+    	background-image:webkit-linear-gradient(to left,rgba(0,0,0,.00001) 0,rgba(0,0,0,.00001) 100%);
+    	background-image:webkit-gradient(to left,rgba(0,0,0,.00001) 0,rgba(0,0,0,.00001) 100%);
+    }
+    .carousel-control.left:hover {
+    	background-image:linear-gradient(to right,rgba(0,0,0,.6) 0,rgba(0,0,0,.0001) 100%);
+    	background-image:webkit-linear-gradient(to right,rgba(0,0,0,.6) 0,rgba(0,0,0,.0001) 100%);
+    	background-image:webkit-gradient(to right,rgba(0,0,0,.6) 0,rgba(0,0,0,.0001) 100%);
+    }
+    .carousel-control.right:hover {
+   		background-image:linear-gradient(to left,rgba(0,0,0,.6) 0,rgba(0,0,0,.0001) 100%);
+   		background-image:webkit-linear-gradient(to left,rgba(0,0,0,.6) 0,rgba(0,0,0,.0001) 100%);
+   		background-image:webkit-gradient(to left,rgba(0,0,0,.6) 0,rgba(0,0,0,.0001) 100%);
+    }
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<!--my style-->
+    <link rel="stylesheet" type="text/css" href="/fts/fts/css/style.css" />
+    
+    
+	<script type='text/javascript' src='/fts/fts/js/jquery-2.2.4.min.js' crossorigin='anonymous'></script>
+    
+
+
+<!-- put javascript or css here. -->
+<script type='text/javascript' src='/fts/fts/js/eleUtils.js'></script>
+<script type='text/javascript' src='/fts/fts/js/jquery.print.js'></script>
+<script type='text/javascript' src='/fts/dwr/util.js'></script>
+<script type='text/javascript' src='/fts/dwr/engine.js'></script>
+<script type='text/javascript' src='/fts/fts/js/dwr.js'></script>
+<script type='text/javascript' src='/fts/dwr/interface/SelfPublishAction.js'></script>
+<script type='text/javascript' src='/fts/dwr/interface/QueryBrCmpyPrintAction.js'></script>
+<script type='text/javascript' src='/fts/dwr/interface/CounterService.js'></script>
+<script>
+/*download file*/
+function genURL(docType, banNo) {
+	var url = null;
+	var path = "";
+	
+	if(docType == 1){
+		path = $('#docType1DocYear').val();	
+	} else if(docType == 2){
+		path = $('#docType2DocYear').val();	
+	} else if(docType == 3){
+		path = $('#docType3DocYear').val();	
+	} else if(docType == 4){
+		path = $('#docType4DocYear').val();	
+	} else if(docType == 5){
+		path = $('#docType5DocYear').val();	
+	} else if(docType == 6){
+		path = $('#docType6DocYear').val();	
+	} else if(docType == 7){
+		path = $('#docType7DocYear').val();	
+	} else {
+		path = docType;
+	}
+	
+	if (path == null || path == "") {
+		alert("目前沒有提供檔案下載!!!");
+		return;
+	}
+	
+	url = "../../publish/SelfPublish/downloadFile.do?filenameToDl=" + path + "&banNo=" + banNo;
+	document.editSelfPublishDLForm.action = url;
+	document.editSelfPublishDLForm.target = "blank";
+	document.editSelfPublishDLForm.submit();
+}
+
+$(document).ready(function() {
+// 		var egisContent = '86317626_核准設立_凰懋有限公司_5,000,000_莊君超_臺北市萬華區富民路145巷15弄13號3樓_臺北市政府_080年12月10日_098年08月24日';
+// 		alert("egisContent:" + egisContent);
+		var lang = false;
+		if ('zh_TW' == 'en') 
+			lang = true;
+		
+		//Map counter
+		$('#egisMap').click(function() {
+			CounterService.setCounter("egisMap", lang);	
+		});
+		
+		//自行登載使用
+		document.selfPublishForm.banNo.value = $("#banNo").val();
+		document.selfPublishForm.orgType.value = "C";
+	
+		$('#tabCmpy').click(function() {
+			$('#tabCmpy').addClass("tag_on");
+			$('#tabCmpy').parent().addClass("active");
+			$('#tabShareHolder').removeClass("tag_on");
+			$('#tabShareHolder').parent().removeClass("active");
+			$('#tabMgr').removeClass("tag_on");
+			$('#tabMgr').parent().removeClass("active");
+			$('#tabBrCmpy').removeClass("tag_on");
+			$('#tabBrCmpy').parent().removeClass("active");
+			$('#tabOthers').removeClass("tag_on");
+			$('#tabOthers').parent().removeClass("active");
+			$('#tabHistory').removeClass("tag_on");
+			$('#tabHistory').parent().removeClass("active");
+			$('#tabSelfPublish').removeClass("tag_on");
+			$('#tabSelfPublish').parent().removeClass("active");
+			$('#tabAdvanced').removeClass("tag_on");
+			$('#tabAdvanced').parent().removeClass("active");
+			
+			$('#tabCmpyContent').show();
+			$('#tabCmpyContent').addClass("active");
+			$('#tabShareHolderContent').hide();
+			$('#tabShareHolderContent').removeClass("active");
+			$('#tabMgrContent').hide();
+			$('#tabMgrContent').removeClass("active");
+			$('#tabBrCmpyContent').hide();
+			$('#tabBrCmpyContent').removeClass("active");
+			$('#tabOthersContent').hide();
+			$('#tabOthersContent').removeClass("active");
+			$('#tabHistoryContent').hide();
+			$('#tabHistoryContent').removeClass("active");
+			$('#tabSelfPublishContent').hide();
+			$('#tabSelfPublishContent').removeClass("active");
+			$('#tabAdvancedContent').hide();
+			$('#tabAdvancedContent').removeClass("active");
+		});
+		
+		$('#tabShareHolder').click(function() {
+			$('#tabShareHolder').addClass("tag_on");
+			$('#tabShareHolder').parent().addClass("active");
+			$('#tabCmpy').removeClass("tag_on");
+			$('#tabCmpy').parent().removeClass("active");
+			$('#tabMgr').removeClass("tag_on");
+			$('#tabMgr').parent().removeClass("active");
+			$('#tabBrCmpy').removeClass("tag_on");
+			$('#tabBrCmpy').parent().removeClass("active");
+			$('#tabOthers').removeClass("tag_on");
+			$('#tabOthers').parent().removeClass("active");
+			$('#tabHistory').removeClass("tag_on");
+			$('#tabHistory').parent().removeClass("active");
+			$('#tabSelfPublish').removeClass("tag_on");
+			$('#tabSelfPublish').parent().removeClass("active");
+			$('#tabAdvanced').removeClass("tag_on");
+			$('#tabAdvanced').parent().removeClass("active");
+			
+			$('#tabShareHolderContent').show();
+			$('#tabShareHolderContent').addClass("active");
+			$('#tabCmpyContent').hide();
+			$('#tabCmpyContent').removeClass("active");
+			$('#tabMgrContent').hide();
+			$('#tabMgrContent').removeClass("active");
+			$('#tabBrCmpyContent').hide();
+			$('#tabBrCmpyContent').removeClass("active");
+			$('#tabOthersContent').hide();
+			$('#tabOthersContent').removeClass("active");
+			$('#tabHistoryContent').hide();
+			$('#tabHistoryContent').removeClass("active");
+			$('#tabSelfPublishContent').hide();
+			$('#tabSelfPublishContent').removeClass("active");
+			$('#tabAdvancedContent').hide();
+			$('#tabAdvancedContent').removeClass("active");
+		});
+		
+		$('#tabMgr').click(function() {
+			$('#tabMgr').addClass("tag_on");
+			$('#tabMgr').parent().addClass("active");
+			$('#tabShareHolder').removeClass("tag_on");
+			$('#tabShareHolder').parent().removeClass("active");
+			$('#tabCmpy').removeClass("tag_on");
+			$('#tabCmpy').parent().removeClass("active");
+			$('#tabBrCmpy').removeClass("tag_on");
+			$('#tabBrCmpy').parent().removeClass("active");
+			$('#tabOthers').removeClass("tag_on");
+			$('#tabOthers').parent().removeClass("active");
+			$('#tabHistory').removeClass("tag_on");
+			$('#tabHistory').parent().removeClass("active");
+			$('#tabSelfPublish').removeClass("tag_on");
+			$('#tabSelfPublish').parent().removeClass("active");
+			$('#tabAdvanced').removeClass("tag_on");
+			$('#tabAdvanced').parent().removeClass("active");
+			
+			$('#tabMgrContent').show();
+			$('#tabMgrContent').addClass("active");
+			$('#tabShareHolderContent').hide();
+			$('#tabShareHolderContent').removeClass("active");
+			$('#tabCmpyContent').hide();
+			$('#tabCmpyContent').removeClass("active");
+			$('#tabBrCmpyContent').hide();
+			$('#tabBrCmpyContent').removeClass("active");
+			$('#tabOthersContent').hide();
+			$('#tabOthersContent').removeClass("active");
+			$('#tabHistoryContent').hide();
+			$('#tabHistoryContent').removeClass("active");
+			$('#tabSelfPublishContent').hide();
+			$('#tabSelfPublishContent').removeClass("active");
+			$('#tabAdvancedContent').hide();
+			$('#tabAdvancedContent').removeClass("active");
+		});
+		
+		$('#tabBrCmpy').click(function() {
+			$('#tabBrCmpy').addClass("tag_on");
+			$('#tabBrCmpy').parent().addClass("active");
+			$('#tabShareHolder').removeClass("tag_on");
+			$('#tabShareHolder').parent().removeClass("active");
+			$('#tabMgr').removeClass("tag_on");
+			$('#tabMgr').parent().removeClass("active");
+			$('#tabCmpy').removeClass("tag_on");
+			$('#tabCmpy').parent().removeClass("active");
+			$('#tabOthers').removeClass("tag_on");
+			$('#tabOthers').parent().removeClass("active");
+			$('#tabHistory').removeClass("tag_on");
+			$('#tabHistory').parent().removeClass("active");
+			$('#tabSelfPublish').removeClass("tag_on");
+			$('#tabSelfPublish').parent().removeClass("active");
+			$('#tabAdvanced').removeClass("tag_on");
+			$('#tabAdvanced').parent().removeClass("active");
+			
+			$('#tabBrCmpyContent').show();
+			$('#tabBrCmpyContent').addClass("active");
+			$('#tabShareHolderContent').hide();
+			$('#tabShareHolderContent').removeClass("active");
+			$('#tabMgrContent').hide();
+			$('#tabMgrContent').removeClass("active");
+			$('#tabCmpyContent').hide();
+			$('#tabCmpyContent').removeClass("active");
+			$('#tabOthersContent').hide();
+			$('#tabOthersContent').removeClass("active");
+			$('#tabHistoryContent').hide();
+			$('#tabHistoryContent').removeClass("active");
+			$('#tabSelfPublishContent').hide();
+			$('#tabSelfPublishContent').removeClass("active");
+			$('#tabAdvancedContent').hide();
+			$('#tabAdvancedContent').removeClass("active");
+		});
+		
+		$('#tabOthers').click(function() {
+			$('#tabOthers').addClass("tag_on");
+			$('#tabOthers').parent().addClass("active");
+			$('#tabShareHolder').removeClass("tag_on");
+			$('#tabShareHolder').parent().removeClass("active");
+			$('#tabMgr').removeClass("tag_on");
+			$('#tabMgr').parent().removeClass("active");
+			$('#tabCmpy').removeClass("tag_on");
+			$('#tabCmpy').parent().removeClass("active");
+			$('#tabBrCmpy').removeClass("tag_on");
+			$('#tabBrCmpy').parent().removeClass("active");
+			$('#tabHistory').removeClass("tag_on");
+			$('#tabHistory').parent().removeClass("active");
+			$('#tabSelfPublish').removeClass("tag_on");
+			$('#tabSelfPublish').parent().removeClass("active");
+			$('#tabAdvanced').removeClass("tag_on");
+			$('#tabAdvanced').parent().removeClass("active");
+			
+			$('#tabOthersContent').show();
+			$('#tabOthersContent').addClass("active");
+			$('#tabShareHolderContent').hide();
+			$('#tabShareHolderContent').removeClass("active");
+			$('#tabMgrContent').hide();
+			$('#tabMgrContent').removeClass("active");
+			$('#tabCmpyContent').hide();
+			$('#tabCmpyContent').removeClass("active");
+			$('#tabBrCmpyContent').hide();
+			$('#tabBrCmpyContent').removeClass("active");
+			$('#tabHistoryContent').hide();
+			$('#tabHistoryContent').removeClass("active");
+			$('#tabSelfPublishContent').hide();
+			$('#tabSelfPublishContent').removeClass("active");
+			$('#tabAdvancedContent').hide();
+			$('#tabAdvancedContent').removeClass("active");
+
+			$("#othersPrint").click(function() {
+				$("#printOthersArea").show();
+				$("#printOthersArea").print({
+					globalStyles: false,
+		            mediaPrint: false,
+		            stylesheet: null,
+		            noPrintSelector: ".no-print",
+		            iframe: true,
+		            append: null,
+		            prepend: '<img style="display:inline-block; width:auto; height:30px;" src="/fts/fts/images/title_logo.png"/><h3 style="display:inline-block; margin-top:0px; vertical-align:middle;">經濟部商工登記公示資料查詢服務</h3>',
+		            manuallyCopyFormValues: true,
+		            deferred: $.Deferred(),
+		            timeout: 750,
+		            title: '經濟部商工登記公示資料查詢服務' + '--------統一編號86317626',
+		            doctype: '<!doctype html>'
+				});
+				$("#printOthersArea").hide();
+				$.LoadingOverlay("hide");
+			})
+		});
+		
+		$('#tabHistory').click(function() {
+			$('#tabHistory').addClass("tag_on");
+			$('#tabHistory').parent().addClass("active");
+			$('#tabOthers').removeClass("tag_on");
+			$('#tabOthers').parent().removeClass("active");
+			$('#tabShareHolder').removeClass("tag_on");
+			$('#tabShareHolder').parent().removeClass("active");
+			$('#tabMgr').removeClass("tag_on");
+			$('#tabMgr').parent().removeClass("active");
+			$('#tabCmpy').removeClass("tag_on");
+			$('#tabCmpy').parent().removeClass("active");
+			$('#tabBrCmpy').removeClass("tag_on");
+			$('#tabBrCmpy').parent().removeClass("active");
+			$('#tabSelfPublish').removeClass("tag_on");
+			$('#tabSelfPublish').parent().removeClass("active");
+			$('#tabAdvanced').removeClass("tag_on");
+			$('#tabAdvanced').parent().removeClass("active");
+			
+			$('#tabHistoryContent').show();
+			$('#tabHistoryContent').addClass("active");
+			$('#tabOthersContent').hide();
+			$('#tabOthersContent').removeClass("active");
+			$('#tabShareHolderContent').hide();
+			$('#tabShareHolderContent').removeClass("active");
+			$('#tabMgrContent').hide();
+			$('#tabMgrContent').removeClass("active");
+			$('#tabCmpyContent').hide();
+			$('#tabCmpyContent').removeClass("active");
+			$('#tabBrCmpyContent').hide();
+			$('#tabBrCmpyContent').removeClass("active");
+			$('#tabSelfPublishContent').hide();
+			$('#tabSelfPublishContent').removeClass("active");
+			$('#tabAdvancedContent').hide();
+			$('#tabAdvancedContent').removeClass("active");
+		});
+		
+		$('#tabSelfPublish').click(function() {
+			$('#tabSelfPublish').addClass("tag_on");
+			$('#tabSelfPublish').parent().addClass("active");
+			$('#tabOthers').removeClass("tag_on");
+			$('#tabOthers').parent().removeClass("active");
+			$('#tabShareHolder').removeClass("tag_on");
+			$('#tabShareHolder').parent().removeClass("active");
+			$('#tabMgr').removeClass("tag_on");
+			$('#tabMgr').parent().removeClass("active");
+			$('#tabCmpy').removeClass("tag_on");
+			$('#tabCmpy').parent().removeClass("active");
+			$('#tabBrCmpy').removeClass("tag_on");
+			$('#tabBrCmpy').parent().removeClass("active");
+			$('#tabHistory').removeClass("tag_on");
+			$('#tabHistory').parent().removeClass("active");
+			$('#tabAdvanced').removeClass("tag_on");
+			$('#tabAdvanced').parent().removeClass("active");
+			
+			$('#tabSelfPublishContent').show();
+			$('#tabSelfPublishContent').addClass("active");
+			$('#tabOthersContent').hide();
+			$('#tabOthersContent').removeClass("active");
+			$('#tabShareHolderContent').hide();
+			$('#tabShareHolderContent').removeClass("active");
+			$('#tabMgrContent').hide();
+			$('#tabMgrContent').removeClass("active");
+			$('#tabCmpyContent').hide();
+			$('#tabCmpyContent').removeClass("active");
+			$('#tabBrCmpyContent').hide();
+			$('#tabBrCmpyContent').removeClass("active");
+			$('#tabHistoryContent').hide();
+			$('#tabHistoryContent').removeClass("active");
+			$('#tabAdvancedContent').hide();
+			$('#tabAdvancedContent').removeClass("active");
+
+			$("#selfPublishPrint").click(function() {
+				$("#printSelfPublishArea").show();
+				$("#printSelfPublishArea").print({
+					globalStyles: false,
+		            mediaPrint: false,
+		            stylesheet: null,
+		            noPrintSelector: ".no-print",
+		            iframe: true,
+		            append: null,
+		            prepend: '<img style="display:inline-block; width:auto; height:30px;" src="/fts/fts/images/title_logo.png"/><h3 style="display:inline-block; margin-top:0px; vertical-align:middle;">經濟部商工登記公示資料查詢服務</h3>',
+		            manuallyCopyFormValues: true,
+		            deferred: $.Deferred(),
+		            timeout: 750,
+		            title: '經濟部商工登記公示資料查詢服務' + '--------統一編號86317626',
+		            doctype: '<!doctype html>'
+				});
+				$("#printSelfPublishArea").hide();
+				$.LoadingOverlay("hide");
+			})
+		});
+		
+		$('#tabAdvanced').click(function() {
+			$('#tabAdvanced').addClass("tag_on");
+			$('#tabAdvanced').parent().addClass("active");
+			$('#tabCmpy').removeClass("tag_on");
+			$('#tabCmpy').parent().removeClass("active");
+			$('#tabShareHolder').removeClass("tag_on");
+			$('#tabShareHolder').parent().removeClass("active");
+			$('#tabMgr').removeClass("tag_on");
+			$('#tabMgr').parent().removeClass("active");
+			$('#tabBrCmpy').removeClass("tag_on");
+			$('#tabBrCmpy').parent().removeClass("active");
+			$('#tabOthers').removeClass("tag_on");
+			$('#tabOthers').parent().removeClass("active");
+			$('#tabHistory').removeClass("tag_on");
+			$('#tabHistory').parent().removeClass("active");
+			$('#tabSelfPublish').removeClass("tag_on");
+			$('#tabSelfPublish').parent().removeClass("active");
+			
+			$('#tabAdvancedContent').show();
+			$('#tabAdvancedContent').addClass("active");
+			$('#tabCmpyContent').hide();
+			$('#tabCmpyContent').removeClass("active");
+			$('#tabShareHolderContent').hide();
+			$('#tabShareHolderContent').removeClass("active");
+			$('#tabMgrContent').hide();
+			$('#tabMgrContent').removeClass("active");
+			$('#tabBrCmpyContent').hide();
+			$('#tabBrCmpyContent').removeClass("active");
+			$('#tabOthersContent').hide();
+			$('#tabOthersContent').removeClass("active");
+			$('#tabHistoryContent').hide();
+			$('#tabHistoryContent').removeClass("active");
+			$('#tabSelfPublishContent').hide();
+			$('#tabSelfPublishContent').removeClass("active");
+		});
+		
+		$("#printArea").hide(); //初始時就把各TAB內容先塞在printArea
+		var contentClone = $('#tabCmpyContent').clone();
+		$(contentClone).find('span#linkGoogleSearch').remove().end()
+			.find('span#linkMoea').remove().end()
+			.find('span#linkSubscr').remove().end()
+			.find('span#linkGoogleMap').remove().end()
+			.find('span#linkETax').remove().end().appendTo("#printArea");
+		$('#tabCmpyContent').hide();
+		$('#tabShareHolderContent').show();
+		$("#printArea").append( "<br>----------------------------------------------------------------------------------------------------------------------------------<br>" );
+		$('#tabShareHolderContent').clone().appendTo("#printArea");
+		$('#tabShareHolderContent').hide();
+		$('#tabMgrContent').show();
+		$("#printArea").append( "<br>----------------------------------------------------------------------------------------------------------------------------------<br>" );
+		$('#tabMgrContent').clone().appendTo("#printArea");
+		$('#tabMgrContent').hide();
+		
+//		 初始時先把跨域資料與自行揭露事項內容分別塞在printOthersArea與printSelfPublishArea
+		$("#printOthersArea").hide();
+		$('#printBriefCmpyContent').show();
+		$('#printBriefCmpyContent').clone().appendTo("#printOthersArea");
+		$('#printBriefCmpyContent').hide();
+		$("#printOthersArea").append( "<br>----------------------------------------------------------------------------------------------------------------------------------<br>" );
+		var contentCloneOthers = $('#tabOthersContent').clone();
+		$(contentCloneOthers).find('span#spanPrintPage').remove().end()
+			.find('#showStatement').remove().end().appendTo("#printOthersArea");
+
+		
+		$("#printSelfPublishArea").hide();
+		$('#printBriefCmpyContent').show();
+		$('#printBriefCmpyContent').clone().appendTo("#printSelfPublishArea");
+		$('#printBriefCmpyContent').hide();
+		$("#printSelfPublishArea").append( "<br>----------------------------------------------------------------------------------------------------------------------------------<br>" );
+		$('#tabSelfPublishContent').show();
+		var contentCloneSelfPublish = $('#tabSelfPublishContent').clone();
+		$(contentCloneSelfPublish).find('span#spanPrintPage').remove().end()
+			.find('#showStatementSP').remove().end()
+			.find('#requireNotice').remove().end()
+			.find('#spTable').remove().end().appendTo("#printSelfPublishArea");
+		$('#printSpTable').show();
+		$('#printSpTable').clone().appendTo("#printSelfPublishArea");
+		$('#printSpTable').hide();
+		$('#tabSelfPublishContent').hide();
+
+		$('#tabCmpyContent').show();
+		
+		$("#friendlyPrint").click(function() {
+			//第一次先去抓分公司資料到printArea,之後就存著
+			if ($('#printArea #tabPrintBrCmpyContent').length == 0) {
+				var jsmodel = new PsysmGrantlistVO();
+				jsmodel.banNo = '86317626';
+	    		jsmodel.eng = document.detailForm.eng.value;
+	    		
+	    		$.LoadingOverlay("show");
+				QueryBrCmpyPrintAction.getBrCmpyList(jsmodel, {
+					callback : function(data) {
+						
+						if(data.length == 0){	
+							$('#tabPrintBrCmpyContent').show();
+							$("#printArea").append( "<br>----------------------------------------------------------------------------------------------------------------------------------<br>" );
+							$('#tabPrintBrCmpyContent').clone().appendTo("#printArea");
+							$('#tabPrintBrCmpyContent').hide();
+							$("#printArea").append( "依您的查詢條件，查無符合結果。");	
+						}else{
+							for (var i = 0; i < data.length; i++) {
+								var vo = data[i];
+								var newField = $('#printBrCmpyClone > div:first').clone();
+								
+								newField.find(".bRn").text(vo.bRn);
+								newField.find(".brBanNo").text(vo.brBanNo);
+								newField.find(".brName").text(vo.brName);
+								newField.find(".brStatusDesc").text(vo.brStatusDesc);
+								newField.find(".brEstabDate").text(vo.brEstabDate);
+								newField.find(".chgAppDate").text(vo.chgAppDate);
+								
+								$("#tabPrintBrCmpyContent").append(newField);
+							}
+							$('#tabPrintBrCmpyContent').show();
+							$("#printArea").append( "<br>----------------------------------------------------------------------------------------------------------------------------------<br>" );
+							$('#tabPrintBrCmpyContent').clone().appendTo("#printArea");
+							$('#tabPrintBrCmpyContent').hide();
+						}
+						
+						$("#printArea").show();
+						$("#printArea").print({
+							globalStyles: false,
+				            mediaPrint: false,
+				            stylesheet: null,
+				            noPrintSelector: ".no-print",
+				            iframe: true,
+				            append: null,
+				            prepend: '<img style="display:inline-block; width:auto; height:30px;" src="/fts/fts/images/title_logo.png"/><h3 style="display:inline-block; margin-top:0px; vertical-align:middle;">經濟部商工登記公示資料查詢服務</h3>',
+				            manuallyCopyFormValues: true,
+				            deferred: $.Deferred(),
+				            timeout: 750,
+				            title: '經濟部商工登記公示資料查詢服務' + '--------統一編號86317626',
+				            doctype: '<!doctype html>'
+						});
+						$("#printArea").hide();
+						$.LoadingOverlay("hide");	
+					},
+					errorHandler : function(errorString, exception) {
+						err(errorString, exception);
+					}
+				});
+			} else {
+				$("#printArea").show();
+				$("#printArea").print({
+					globalStyles: false,
+		            mediaPrint: false,
+		            stylesheet: null,
+		            noPrintSelector: ".no-print",
+		            iframe: true,
+		            append: null,
+		            prepend: '<img style="display:inline-block; width:auto; height:30px;" src="/fts/fts/images/title_logo.png"/><h3 style="display:inline-block; margin-top:0px; vertical-align:middle;">經濟部商工登記公示資料查詢服務</h3>',
+		            manuallyCopyFormValues: true,
+		            deferred: $.Deferred(),
+		            timeout: 750,
+		            title: '經濟部商工登記公示資料查詢服務' + '--------統一編號86317626',
+		            doctype: '<!doctype html>'
+				});
+				$("#printArea").hide();
+			}
+			
+		});
+
+		if(document.detailForm.brCmpyPage.value == "Y"){
+			document.detailForm.brCmpyPage.value = "N";
+			$('#tabBrCmpy').click();
+		}
+		if(document.detailForm.historyPage.value == "Y"){
+			document.detailForm.historyPage.value = "N";
+			$('#tabHistory').click();
+		}
+	});
+	
+	function queryBranch(brBanNo, isRightClick) {
+		if(isRightClick){
+			document.detailForm.target ="_blank";
+		}else{
+	    	document.detailForm.target ="_self";
+			$.LoadingOverlay("show");
+	    }
+		document.detailForm.brBanNo.value = brBanNo;
+		document.detailForm.action = "../../query/QueryBrCmpyDetail/queryBrCmpyDetail.do";
+		document.detailForm.submit();
+	}
+	
+	function queryCmpy(name, banNo, isRightClick) {
+		if(isRightClick){
+			document.detailForm.target ="_blank";
+		}else{
+	    	document.detailForm.target ="_self";
+			$.LoadingOverlay("show");
+	    }
+		document.detailForm.banNo.value = banNo;
+		
+		if(name.lastIndexOf("有限合夥") > 1){
+			document.detailForm.action = "../../query/QueryLmtdDetail/queryLmtdDetail.do";
+		} else {
+			document.detailForm.action = "../../query/QueryCmpyDetail/queryCmpyDetail.do";
+		}
+		document.detailForm.submit();
+	}
+	
+	function gotoPage(cp){
+		$.LoadingOverlay("show");
+		if(cp != $("#currentPage").val()){
+			document.detailForm.banNo.value = $("#banNo").val();
+			document.detailForm.CPage.value = cp;
+			document.detailForm.brCmpyPage.value = "Y";
+			document.detailForm.target ="_self";
+			document.detailForm.action = "../../query/QueryCmpyDetail/queryCmpyDetail.do";
+			document.detailForm.submit();
+		}
+		$.LoadingOverlay("hide");
+	}
+	
+	function gotoPageHistory(cp){
+		$.LoadingOverlay("show");
+		if(cp != $("#currentPageHistory").val()){
+			document.detailForm.banNo.value = $("#banNo").val();
+			document.detailForm.CPageHistory.value = cp;
+			document.detailForm.historyPage.value = "Y";
+			document.detailForm.target ="_self";
+			document.detailForm.action = "../../query/QueryCmpyDetail/queryCmpyDetail.do";
+			document.detailForm.submit();
+		}
+		$.LoadingOverlay("hide");
+	}
+	
+	function queryHistoryInfo(cmpyModifNo, banNo, isRightClick) {
+// 		if(isRightClick){
+			document.historyForm.target ="_blank";
+// 		}else{
+// 	    	document.historyForm.target ="_self";
+// 			$.LoadingOverlay("show");
+// 	    }
+		
+		document.historyForm.banNo.value = banNo;
+		document.historyForm.cmpyModifNo.value = cmpyModifNo;
+		document.historyForm.action = "../../history/QueryCmpyDetail/queryCmpyDetail.do";
+		document.historyForm.submit();
+	}
+	
+	function openUrl(url) {
+		window.open(url);
+	}
+	
+</script>
+    <script type="text/javascript">
+	    function alertErrorMsg(){
+	    	if(document.getElementById("errorMessage").value!="")
+	    		alert(document.getElementById("errorMessage").value);
+	    }
+	    alertErrorMsg();
+		function requery(){
+			//回前一頁
+			//window.history.back();
+			
+			//回空白查詢頁面
+			$("#detailCallQueryListForm").submit();
+		}
+		
+		function gotoSubscrLogin(){
+			document.subscrForm.action = '../../subscr/SubscrAcct/login.do';
+			document.subscrForm.submit();
+		}
+		function gotoSubscrList(){
+			document.subscrForm.action = '../../subscr/SubscrList/queryList.do';
+			document.subscrForm.submit();
+		}
+		function popTestWindow(banNo) {
+			document.detailForm.banNo.value = banNo;
+			document.detailForm.action="../../query/QueryCmpyDetail/transFbfhInfo.do";
+			document.detailForm.target="_blank";
+			document.detailForm.submit();
+		}
+		function hoverMoreLink(spanObject){
+			spanObject.className = "moreLinkMouseOver";
+		}
+		function unHoverMoreLink(spanObject){
+			spanObject.className = "moreLinkMouseOut";
+		}
+		function hoverGoogleLink(spanObject){
+			spanObject.className = "googleLinkMouseOver";
+		}
+		function unHoverGoogleLink(spanObject){
+			spanObject.className = "googleLinkMouseOut";
+		}
+		function openGoogleMap(component){
+			var url = "http://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q=" + encodeURIComponent(component);
+			var theLang = 'zh_TW';
+			if(theLang == 'en'){
+				url = "http://maps.google.com/maps?f=q&hl=en&geocode=&q=" + encodeURIComponent(component);
+			}
+			var win = window.open(url, "map");
+			if (win) {
+			    //Browser has allowed it to be opened
+			    win.focus();
+			} else {
+			    //Browser has blocked it
+				 alert('請允許跳出視窗。');
+			}
+		}
+		function openMapEgis(infotype){
+			var egisContent = '86317626_核准設立_凰懋有限公司_5,000,000_莊君超_臺北市萬華區富民路145巷15弄13號3樓_臺北市政府_080年12月10日_098年08月24日'
+			var egisContentArr = egisContent.split("_");
+			
+			if("Get_Csmm" == (infotype)) {
+				$("#EDataType").val("公司");
+				$("#Ban_NO").val(egisContentArr[0]);
+				$("#Status").val(egisContentArr[1]);
+				$("#Name").val(egisContentArr[2]);
+				$("#Capital_Amount").val(egisContentArr[3]);
+				$("#Representative_Owner").val(egisContentArr[4]);
+				$("#Addr").val(egisContentArr[5]);
+				$("#Registration_Authority").val(egisContentArr[6]);
+				$("#Approved_Date").val(egisContentArr[7]);
+				$("#Last_Approved_Chang_Date").val(egisContentArr[8]);
+			} else if("Get_BrCsmm"== (infotype)) {
+				$("#EDataType").val("分公司");
+				$("#Ban_NO").val(egisContentArr[0]);
+				$("#Status").val(egisContentArr[1]);
+				$("#Name").val(egisContentArr[2]);
+				$("#Representative_Owner").val(egisContentArr[3]);
+				$("#Addr").val(egisContentArr[4]);
+				$("#Approved_Date").val(egisContentArr[5]);
+				$("#Last_Approved_Chang_Date").val(egisContentArr[6]);
+				$("#Parent_Company_Ban_NO").val(egisContentArr[7]);
+				$("#Parent_Company_Name").val(egisContentArr[8]);
+			} else if("Get_Busm" == (infotype)) {
+				$("#EDataType").val("商家");
+				$("#RegUnitCode").val(egisContentArr[0]);
+				$("#Ban_NO").val(egisContentArr[1]);
+				$("#Status").val(egisContentArr[2]);
+				$("#Name").val(egisContentArr[3]);
+				$("#Capital_Amount").val(egisContentArr[4]);
+				$("#Representative_Owner").val(egisContentArr[5]);
+				$("#Addr").val(egisContentArr[6]);
+				$("#Registration_Authority").val(egisContentArr[7]);
+				$("#Organization_Type").val(egisContentArr[8]);
+				$("#Approved_Date").val(egisContentArr[9]);
+				$("#Last_Approved_Chang_Date").val(egisContentArr[10]);
+			} else if("Get_Fac" == (infotype)) {
+				$("#EDataType").val("工廠");
+				$("#AgencyCode").val(egisContentArr[0]);
+				$("#Registration_Authority").val(egisContentArr[1]);
+				$("#Name").val(egisContentArr[2]);
+				$("#Approved_NO").val(egisContentArr[3]);
+				$("#Approved_Date").val(egisContentArr[4]);
+				$("#EstbId").val(egisContentArr[5]);
+				$("#Setting_Date").val(egisContentArr[6]);
+				$("#Addr").val(egisContentArr[7]);
+				$("#Representative_Owner").val(egisContentArr[8]);
+				$("#Ban_NO").val(egisContentArr[9]);
+				$("#Organization_Type").val(egisContentArr[10]);
+				$("#Capital_Amount").val(egisContentArr[11]);
+				$("#Status").val(egisContentArr[12]);
+				$("#Last_Approved_Chang_Date").val(egisContentArr[13]);
+				$("#Cancel_Date").val(egisContentArr[14]);
+			} else if("Get_CORP" == (infotype)) {
+				$("#EDataType").val("有限合夥");
+				$("#Registration_Authority").val(egisContentArr[0]);
+				$("#Ban_NO").val(egisContentArr[1]);
+				$("#Name").val(egisContentArr[2]);
+				$("#Addr").val(egisContentArr[3]);
+				$("#Capital_Amount").val(egisContentArr[4]);
+				$("#Approved_Date").val(egisContentArr[5]);
+				$("#Status").val(egisContentArr[6]);
+				$("#Duration").val(egisContentArr[7]);
+				$("#Last_Approved_Chang_Status").val(egisContentArr[8]);
+				$("#Approved_NO").val(egisContentArr[9]);
+				$("#Representative_Name").val(egisContentArr[10]);
+				$("#General_Partner_Name").val(egisContentArr[11]);
+				$("#Limited_Partner").val(egisContentArr[12]);
+				$("#Manager_Name").val(egisContentArr[13]);
+				$("#Appointment_Dissolution").val(egisContentArr[14]);
+			} 
+			
+			document.egisForm.submit();
+		}
+		
+		function openGoogleSearch(qparam){
+			var url = 'https://google.com.tw/search?q="' + encodeURIComponent(qparam) + '"';
+			var theLang = 'zh_TW';
+			if(theLang == 'en'){
+				url = 'https://google.com/search?q="' + encodeURIComponent(qparam) + '"';
+			}
+			var win = window.open(url, "googlesearch");
+			if (win) {
+			    //Browser has allowed it to be opened
+			    win.focus();
+			} else {
+			    //Browser has blocked it
+				 alert('請允許跳出視窗。');
+			}
+		}
+		function go2TradeWebSite(url) {
+			window.open(url);
+		}
+		
+		$(document).ready(function() {
+			$('[data-toggle="tooltip_other"]').tooltip({title: '可供搜尋如下：<br>財稅營業項目、<br>股票代號、<br>上市(櫃)公司簡稱、<br>上市(櫃)公司產業別、'
+														+'<br>公協會產品資訊、<br>公協會名稱'
+														+'、<br>企業自訂標籤、<br>廠商英文名稱'
+														+'、<br><span class="label label-warning" style="vertical-align:top;padding:0px !important;font-weight: normal">new</span><span style="color:yellow">專利商標</span></span>'
+														, html: true});
+			$('[data-toggle="tooltip_alive"]').tooltip({title: '除核准設立外之現況，如停業、歇業、解散、撤銷、廢止等。', html: true});
+			$('[data-toggle="tooltip_subscr"]').tooltip({title: '回訂閱清單', html: true});
+			
+			//編輯標籤功能
+			//當關閉modal時要取消勾選
+			$("#agreeModal").on('hidden.bs.modal', function () {
+				$('#readStatement').removeAttr('checked');
+				$("#agreeStatement").hide();
+    		});
+			$("#showStatement").click(function() {
+				$('#agreeModal').modal({keyboard: false,backdrop: "static"});
+			});
+			$("#readStatement").click(function() {
+				if (this.checked) {
+					$("#agreeStatement").show();
+				} else {
+					$("#agreeStatement").hide();
+				}
+			});
+			$("#agreeBtn").click(function() {
+				$('#agreeModal').modal('hide');
+				document.editTagForm.objectId.value = $("#objectId").val();
+				document.editTagForm.action = "../../tag/EditTag/editTag.do";
+				document.editTagForm.submit();
+			});
+			$("#disagreeBtn").click(function() {
+				$('#agreeModal').modal('hide');
+			});
+			
+			//自行登載
+			//當關閉modal時要取消勾選
+			$("#agreeModalSP").on('hidden.bs.modal', function () {
+				$('#readStatementSP').removeAttr('checked');
+				$("#agreeStatementSP").hide();
+    		});
+			$("#showStatementSP").click(function() {
+				$('#agreeModalSP').modal({keyboard: false,backdrop: "static"});
+			});
+			$("#readStatementSP").click(function() {
+				if (this.checked) {
+					$("#agreeStatementSP").show();
+				} else {
+					$("#agreeStatementSP").hide();
+				}
+			});
+			$("#agreeBtnSP").click(function() {
+				$('#agreeModalSP').modal('hide');
+				document.selfPublishForm.action = "../../publish/SelfPublish/identification.do";
+				document.selfPublishForm.submit();
+			});
+			$("#disagreeBtnSP").click(function() {
+				$('#agreeModalSP').modal('hide');
+			});
+			
+			$("#closeButton").click(function() {
+			    this.parentNode.style.display = 'none';
+			});
+			
+			$("#mybanner")
+			.mouseover(function(){
+				$(this).attr("src", '/fts/fts/images/360x50_2.jpg');
+			})
+			.mouseout(function(){
+				$(this).attr("src", '/fts/fts/images/360x50.gif');
+			})
+			.click(function(){
+				$.ajax({url: "/fts/query/QueryList/calBannerCount.do"});
+			});
+		})
+	</script>
+	
+    
+	    <script src="https://www.google.com/recaptcha/api.js?hl=zh-TW"
+	        async defer>
+	    </script>
+    
+    <script type='text/javascript' src='/fts/fts/js/loadingoverlay.js'></script>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <div class="container">
+    <div class="row">
+    	<div class="col-lg-10 col-lg-offset-1">
+
+    	<div class="row" id="pageHeaderDiv">
+    		<div class="col-lg-9 col-sm-9">
+    		
+	    	
+    		<div class="title_sc">
+    			<!--新增logo位置 -->
+    			<a href="http://gcis.nat.gov.tw/mainNew/index.jsp" target="_blank">
+    				<img src="/fts/fts/images/logo.png" class="img-responsive" style="padding-left:75px;"/>
+    			</a>
+    			<!--新增logo位置end-->
+	    		<a href="https://findbiz.nat.gov.tw/fts" style="text-decoration:none">
+	    			<h2 class="visible-lg">商工登記公示資料查詢服務</h2>
+		    		<h2 class="visible-md">商工登記公示資料查詢服務</h2>
+		    		<h3 class="visible-sm">商工登記公示資料查詢服務</h3>
+		    		<h3 class="visible-xs">商工登記公示資料查詢服務</h3>
+	    		</a>
+    		</div>
+    		
+    		</div>
+    		<div class="align_right">
+        	<div class="col-lg-3 col-sm-3 padding_20" >
+           		<div class="btn-group col-lg-10 col-lg-offset-2">
+	  				<button type="button" class="btn btn-warning "><span class="glyphicon glyphicon-globe">
+	  				</span>　Language</button>
+	  				<button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+	    				<span class="caret"></span>
+	    				<span class="sr-only">Toggle Dropdown</span>
+	  				</button>
+	  				<ul class="dropdown-menu" role="menu">
+	    				<li><a href="/fts/query/QueryList/queryList.do?request_locale=en">English</a></li>
+	    				<li><a href="/fts/query/QueryList/queryList.do?request_locale=zh_TW">正體中文</a></li>
+	  				</ul>
+				</div>
+        	</div>
+        	</div>
+        </div>
+        </div>
+	</div><!--row-->
+	</div><!-- /.container -->
+    <!-- Navigation END-->
+
+    <!-- Page Content -->
+    <div>
+		
+
+
+ 
+
+
+
+
+
+	
+
+
+<div class="container">
+	<div class="row">
+      	<div class="col-lg-12 text-center">
+		<div class="row ">
+		<div class="col-lg-10 col-lg-offset-1">
+  			<nav class="navbar navbar-default" role="navigation">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+    			<div class="navbar-header ">
+	      			<button type="button" class="navbar-toggle collapsed " data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	        		<span class="sr-only">Toggle navigation</span>
+	        		<span class="icon-bar"></span>
+	        		<span class="icon-bar"></span>
+	        		<span class="icon-bar"></span>
+	      			</button>
+    			</div>
+
+    			<!-- Collect the nav links, forms, and other content for toggling -->
+    			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+    			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      			<ul class="nav navbar-nav">
+        			<li><a href="javascript:requery();"><span class="glyphicon glyphicon-search"></span>　重新查詢</a></li> 
+	       			<li><a href="#" id="friendlyPrint"><span class="glyphicon glyphicon-print"></span>　友善列印</a></li>
+	       			<li><a href="javascript:history.back();"><span class="glyphicon glyphicon-arrow-left"></span>　回查詢清單</a></li>
+    			</ul>
+      			</div><!-- /.navbar-collapse -->
+      			</div>
+      			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+      				<span style="float:right;">
+      					統一編號：86317626
+	       				<br/>公司名稱：凰懋有限公司
+	       			</span>
+	       		</div>
+	       		
+  			</div><!-- /.container-fluid -->
+  			</nav>
+ 		</div><!-- /.col-lg-8 -->  
+		</div><!-- /.row -->
+		</div>
+	</div> <!-- /.row -->  
+</div><!-- /.container -->
+    <div class="main">
+		<div class="container padding_top">
+      		<div class="row">       
+            	<div class="col-lg-12">
+            	   <div class="row">
+						<div class="col-lg-12 text-center">
+							<a href="http://onestop.nat.gov.tw" target="_blank">
+							<img id="mybanner" src="/fts/fts/images/360x50.gif" border="0"/></a>
+						</div>
+					</div>
+					
+                	<div class="row ">
+     					<div class="col-lg-10 col-lg-offset-1 padding_bo">
+						<!----Tab---->
+						<div id="content">
+							<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+						    	<li class="active"><a href="#" data-toggle="tab" id="tabCmpy" class="tag_on">公司基本資料</a></li>
+						        <li><a href="#" data-toggle="tab" id="tabShareHolder">董監事資料</a></li>
+						        <li><a href="#" data-toggle="tab" id="tabMgr">經理人資料</a></li>
+						        <li><a href="#" data-toggle="tab" id="tabBrCmpy">分公司資料</a></li>
+						        <li><a href="#" data-toggle="tab" id="tabOthers">跨域資料</a></li>
+						        <li><a href="#" data-toggle="tab" id="tabHistory">歷史資料</a></li>
+								<li><a href="#" data-toggle="tab" id="tabSelfPublish" onClick="viewed();">自行揭露事項</a></li>
+								<li><a href="#" data-toggle="tab" id="tabAdvanced">法人董監網絡試用版</a></li>
+						    </ul>
+						    <div class="tab-content">
+						        <div class="tab-pane active" id="tabCmpyContent">
+						            <h3>公司基本資料</h3>
+					            	<div class="table-responsive">
+					            		<table class="table table-striped">
+					            			<tbody>
+					            				<tr>
+													<td class="txt_td">統一編號</td>
+													<td>
+														
+															86317626&nbsp;&nbsp;
+														
+														<span id="linkSubscr">
+														
+														
+															<span><a href="javascript:gotoSubscrLogin()" class="btn btn-raised btn-info btn-subscr">訂閱</a></span>
+														
+														</span>
+																												
+														
+														
+													</td>
+												</tr>
+												<tr>
+													<td class="txt_td">公司狀況</td>
+													<td>
+														核准設立
+														
+														
+															<span id="linkETax">
+																&nbsp;「查詢最新營業狀況請至
+																<a href="http://www.etax.nat.gov.tw/cbes/web/CBES113W1_1?vatId=86317626" target="_blank">
+																	財政部稅務入口網&nbsp;</a>」
+															</span>
+														
+													</td>
+												</tr>
+												
+												<tr>
+													<td class="txt_td">公司名稱</td>
+													<td>凰懋有限公司
+													<span id="linkGoogleSearch" class="googleLinkMouseOut" onmouseover="hoverGoogleLink(this);" onmouseout="unHoverGoogleLink(this);" 
+														onclick="openGoogleSearch('凰懋有限公司')">&nbsp;Google搜尋&nbsp;</span>
+													<span id="linkMoea">
+														
+														
+															(出進口廠商英文名稱：LI SHOUN ENTERPRISE CO., LTD.)
+														
+														
+
+<span>
+	「<span id="fbfh" style="color: #337ab7;" 
+		onmouseover="document.getElementById('fbfh_div').style.left=event.clientX + 500;document.getElementById('fbfh_div').style.top=event.clientY + window.document.body.scrollTop;document.getElementById('fbfh_div').style.display='block';"
+		>國貿局廠商英文名稱查詢(限經營出進口或買賣業務者)</span>」
+		<div id="fbfh_div" style="display:none;width:615px;border: 1px solid #000000;font-size:16px;position:absolute;background-color: #C6E1F4;"
+		onmouseover="this.style.display='block';"
+		onmouseout="this.style.display='none';"
+		>本項查詢服務係連結至本部
+		<a href="http://www.trade.gov.tw" style="color: #993300;" target="_blank">國際貿易局</a> > 
+		<a href="https://fbfh.trade.gov.tw/rich/text/indexfbOL.asp" style="color: #993300;" target="_blank">出進口廠商管理系統</a> > 
+		<a href="https://fbfh.trade.gov.tw/rich/text/fbj/asp/fbje140Q.asp" style="color: #993300;" target="_blank">廠商資料查詢</a>網站，<br/>
+		使用本服務或資料內容有疑慮，請與該局<u>出進口廠商登記相關業務聯絡窗口</u>聯絡。<br/>
+		<br/>
+		出進口廠商登記相關業務聯絡窗口：<br/>
+		貿易服務組：(02)2397-7358、(02)2397-7353、(02)2397-7360、(02)2397-7359<br/>
+		高雄辦事處：(07)2711-171 分機218<br/>
+		<center>
+		<table>
+		<tr>
+		<td>
+		<table style="border: 1px solid #000000;background-color: #BDCBA5;">
+		<tr><td><a style="color: #993300;" href="#" onclick="popTestWindow('86317626')">已了解，開始查詢</a></td></tr>
+		</table>
+		</td>
+		<td>&nbsp;&nbsp;
+		</td>
+		<td>
+		<table style="border: 1px solid #000000;background-color: #BDCBA5;">
+		<tr><td><a style="color: #993300;" href="#" onclick="document.getElementById('fbfh_div').style.display='none';">關閉</a></td></tr>
+		</table>
+		</td>
+		</tr>
+		</table>
+		</center>
+	</div>
+</span>
+													</span>
+													
+													
+													
+													</td>
+												</tr>
+												<tr>
+													<td class="txt_td">章程所訂外文公司名稱</td>
+													<td></td>
+												</tr>
+												
+												<tr>
+													<td class="txt_td">資本總額(元)</td><td>5,000,000</td>
+												</tr>
+												
+												<tr>
+													<td class="txt_td">代表人姓名</td>
+													<td>
+													
+														莊君超
+													
+													</td>
+												</tr>
+												<tr>
+													<td class="txt_td">公司所在地</td>
+													<td>
+														臺北市萬華區富民路145巷15弄13號3樓
+														<span id="egisMap" class="googleLinkMouseOut" onmouseover="hoverGoogleLink(this);" onmouseout="unHoverGoogleLink(this);"
+														onclick="openMapEgis('Get_Csmm')">&nbsp;電子地圖&nbsp;</span>
+													</td>
+												</tr>
+												<tr>
+													<td class="txt_td">登記機關</td><td>臺北市政府</td>
+												</tr>
+												<tr>
+													<td class="txt_td">核准設立日期</td><td>080年12月10日</td>
+												</tr>
+												<tr>
+													<td class="txt_td">最後核准變更日期</td><td>098年08月24日</td>
+												</tr>
+												
+												
+
+<!-- 												<tr> -->
+
+<!-- 												</tr> -->
+
+												
+												
+												<tr>
+													<td class="txt_td">所營事業資料</td>
+													<td>
+														
+															F101130&nbsp;
+															蔬果批發業<br/>
+														
+															F101990&nbsp;
+															其他農、畜、水產品批發業<br/>
+														
+															F201010&nbsp;
+															農產品零售業<br/>
+														
+															F201020&nbsp;
+															畜產品零售業<br/>
+														
+															F201030&nbsp;
+															水產品零售業<br/>
+														
+															F401010&nbsp;
+															國際貿易業<br/>
+														
+															ZZ99999&nbsp;
+															除許可業務外，得經營法令非禁止或限制之業務<br/>
+														
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2">
+					            						
+														
+														
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+						        </div>
+						        <div class="tab-pane" id="tabShareHolderContent">
+							        <div class="table-responsive" style="overflow-x:initial">
+								        <table class="table table-striped">
+									        
+									        
+								        </table>
+							        </div>
+						            <h3><strong>董監事資料</strong>(序號依據公司基本資料內容顯示)</h3>
+						           
+						            
+						            
+						            <div class="table-responsive">
+										<table class="table table-striped">
+											<thead>
+												<tr>
+													<th class="large">序號</th>
+													<th class="large">職稱</th>
+													<th class="large">姓名</th>
+													<th class="large">所代表法人</th>
+													<th class="large" style="text-align:right">
+														
+															出資額
+														
+														
+													</th>
+												</tr>
+											</thead>
+											<tbody>
+											
+												
+													
+														<tr>
+															<td data-title="序號" class="large">0001</td>
+															<td data-title="職稱" class="large">
+																
+																董事
+																
+															</td>
+															<td data-title="姓名" class="large">
+																
+																
+																	莊君超
+																
+															</td>
+															<td data-title="所代表法人" class="large">
+																
+																
+																	
+																
+															</td>
+															
+																<td data-title="出資額" class="large" style="text-align:right">5,000,000</td>
+															
+															
+														</tr>
+													
+							                   
+							                
+							                
+												<tr>
+													<td colspan="5">
+														
+														
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+						        </div>
+						        <div class="tab-pane" id="tabMgrContent">
+						            <h3>經理人資料</h3>
+						             <div class="table-responsive">
+										<table class="table table-striped">
+											<thead>
+												<tr>
+													<th class="large">序號</th>
+													<th class="large">姓名</th>
+													<th class="large">到職日期</th>
+												</tr>
+											</thead>
+											<tbody>
+											
+							                
+							                	<tr><td colspan="3" align="center" >
+							                	
+						            			
+						            				依您的查詢條件，查無符合結果。
+						            			
+						            			</td></tr>
+							                
+											</tbody>
+										</table>
+									</div>
+						        </div>
+								<div class="tab-pane" id="tabBrCmpyContent">
+									<h3>分公司資料</h3>
+									<!-- Table -->
+									<div class="table-responsive">
+										<table class="table table-striped">
+											<thead>
+												<tr>
+													<th class="large">序號</th>
+													<th class="large">統一編號</th>
+													<th class="large">分公司名稱</th>
+													<th class="large">公司狀況</th>
+													<th class="large">分公司核准設立日期</th>
+													<th class="large">最後核准變更日期</th>
+												</tr>
+											</thead>
+											<tbody>
+											
+											
+												<tr><td colspan="6" align="center" >依您的查詢條件，查無符合結果。</td></tr>
+											
+											</tbody>
+										</table>
+										
+									</div>
+								</div>
+								
+								<div class="tab-pane" id="tabOthersContent">
+									
+
+
+
+<span id="spanPrintPage"><a href="#" id="othersPrint" class="glyphicon glyphicon-print" style="padding-top: 15px; padding-bottom: 15px;">
+    列印此頁</a></span>
+
+<h4 style="color:blue">本頁籤內所載之資料，非屬依法登記之商工公示資料，僅提供跨域延伸查詢參考之用，所載資料之完整性、即時性和正確性仍應以資料來源單位為準。</h4>
+<h3>財稅資料
+	
+		<span class="title_remark">(資料取得時間：108年05月26日&nbsp;,&nbsp;更新週期：月)</span>
+	
+</h3>
+<div class="table-responsive">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th class="large" style="width:35%">財稅營業項目</th>
+				<th class="large" style="width:15%">是否開立發票</th>
+				<th class="large" style="width:50%">營業地址</th>
+			</tr>
+		</thead>
+		<tbody>
+			
+			<tr>
+				<td data-title="所營事業項目">
+					
+									水果批發<span style='color:#8C8C8C'>(454112)</span><br>
+					
+									蔬菜批發<span style='color:#8C8C8C'>(454111)</span><br>
+					
+				</td>
+				<td data-title="是否開立發票">是</td>
+				<td data-title="營業地址">臺北市萬華區興德里富民路１４５巷１５弄１３號３樓</td>
+			</tr>
+			<tr>
+				<td colspan="3" align="right">
+					資料來源：財政部財政資訊中心-全國營業(稅籍)登記資料集 <br>
+					來源網址：<a href="javascript:void(0)" onclick="openUrl('http://data.gov.tw/node/9400')">http://data.gov.tw/node/9400</a>
+				</td>
+			</tr>
+			
+			
+		</tbody>
+	</table>
+</div>
+<h3>國貿局資料
+	
+		<span class="title_remark">(資料取得時間：108年05月29日&nbsp;,&nbsp;更新週期：月)</span>
+	
+</h3>
+<div class="table-responsive">
+	<table class="table table-bordered">
+		<tr>
+			<td colspan="6" align="center" style="font-size:24px">廠商基本資料</td>
+		</tr>
+		
+		<tr>
+			<td align="center" style="font-weight:bold">統一編號</td>
+			<td data-title="統一編號">86317626</td>
+			<td align="center" style="font-weight:bold">原始登記日期</td>
+			<td data-title="原始登記日期">085年12月18日</td>
+			<td align="center" style="font-weight:bold">核發日期</td>
+			<td data-title="核發日期">085年12月18日</td>
+		</tr>
+		<tr>
+			<td align="center" style="font-weight:bold">廠商中文名稱</td>
+			<td data-title="廠商中文名稱" colspan="5">劦舜有限公司</td>
+		</tr>
+		<tr>
+			<td align="center" style="font-weight:bold">出進口廠商英文名稱</td>
+			<td data-title="廠商英文名稱" colspan="5">LI SHOUN ENTERPRISE CO., LTD.</td>
+		</tr>
+		<tr>
+			<td align="center" style="font-weight:bold">中文營業地址</td>
+			<td data-title="中文營業地址" colspan="5">臺北巿萬華區富民路１４５巷１５弄１３號３樓</td>
+		</tr>
+		<tr>
+			<td align="center" style="font-weight:bold">英文營業地址</td>
+			<td data-title="英文營業地址" colspan="5">3F, NO.13, ALLEY 15, LANE 145, FU MING RD., WAN-HWA DIST., TAIPEI</td>
+		</tr>
+		<tr>
+			<td align="center" style="font-weight:bold">電話號碼</td>
+			<td data-title="電話號碼" colspan="2">02-23077206</td>
+			<td align="center" style="font-weight:bold">傳真號碼</td>
+			<td data-title="傳真號碼" colspan="2">02-23035434</td>
+		</tr>
+		<tr>
+			<td colspan="2" rowspan="2" align="center" style="vertical-align:middle;font-weight:bold">廠商現況</td>
+			<td align="center" style="font-weight:bold">進口資格</td>
+			<td data-title="進口資格" colspan="3">有</td>
+		</tr>
+		<tr>
+			<td align="center" style="font-weight:bold">出口資格</td>
+			<td data-title="出口資格" colspan="3">有</td>
+		</tr>
+		<tr>
+			<td align="right" colspan="6" style="border-color:white">
+				資料來源：經濟部國際貿易局 <br>
+				來源網址：<a href="javascript:void(0)" onclick="openUrl('https://data.gov.tw/dataset/79641')">https://data.gov.tw/dataset/79641</a>
+			</td>
+		</tr>
+		
+		
+	</table>
+</div>
+<h3>公開發行公司資料
+	
+</h3>
+<div class="table-responsive">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th class="large" style="width:20%">股票代號</th>
+				<th class="large" style="width:20%">公司簡稱</th>
+				<th class="large" style="width:40%">公司產業別</th>
+				<th class="large" style="width:20%">市場類別</th>
+			</tr>
+		</thead>
+		<tbody>
+			
+			
+			<tr><td colspan="4" align="center" >依您的查詢條件，查無符合結果。</td></tr>
+			
+		</tbody>
+	</table>
+</div>
+
+<h3>智財局資料
+	
+</h3>
+<div class="table-responsive">
+	<table class="table table-striped">
+		<tbody>
+			<tr>
+				
+				
+					<td align="center">依您的查詢條件，查無符合結果。</td>
+				
+			</tr>
+			
+		</tbody>
+	</table>
+</div>
+
+<h3>企業自訂標籤</h3>
+<a href="javascript:void(0)"></a>
+<button type="button" class="btn btn-primary" style="margin-left:5px" id="showStatement">編輯標籤</button>
+<input type="hidden" name="" value="HC86317626" id="objectId"/>
+								</div>
+								
+						        <div class="tab-pane" id="tabSelfPublishContent" style="display:none">
+									
+
+
+
+<script>
+	function showTableChemical(){
+		$("#TableChemical").show();
+	}
+	function hideTableChemical(){
+		$("#TableChemical").hide();
+	}
+	var global_vCnt = 0;
+	function viewed(){
+		if(global_vCnt == 0){
+			global_vCnt = 1;
+			var model = new SelfPublishModel();
+			var vo = new FactorySelfPublishVO();
+			vo.banNo = $("#banNo").val();
+			vo.orgType = document.selfPublishForm.orgType.value;
+			/* if(vo.orgType == "B"){
+				model.banKey = document.selfPublishForm.banKey.value;
+				model.areaCode = document.selfPublishForm.areaCode.value;
+			} */
+			
+			model.fsp = vo;
+			
+			SelfPublishAction.viewCountAdd(model, {
+				callback : function(data) {
+					if (data.msg != null && data.msg != "") {
+						if (data.msg == "成功") {
+							$("#spanCounter").text(data.counter);
+						}
+						return;
+					}
+				},
+				errorHandler : function(errorString, exception) {
+					err(errorString, exception);
+				}
+			});
+		}
+	}
+</script>
+
+<span id="spanPrintPage"><a href="#" id="selfPublishPrint" class="glyphicon glyphicon-print" style="padding-top: 15px; padding-bottom: 15px;">
+	列印此頁</a></span>
+
+
+
+  
+  
+	<h4 style="color:blue">本頁面所載之自行揭露資料，非屬依法公開之公司登記資料。此項服務目的在於鼓勵公司以自願方式提升公司之資訊透明，提供使用者其他參考資料。本服務無審核權限，亦無擔保該內容完整、即時和正確之責任。公司應就自行揭露事項自負責任。若您認為自行揭露資料有侵害您的權利之情事，敬請逕自聯繫服務專線412-6666，本服務將移除公司自行揭露之資料或採取其他必要措施。</h4>
+	<h3>自行揭露事項<font size="3px">&nbsp;&nbsp;(&nbsp;最後更新時間:  )</font></h3>
+	<br/><h4>公司基本資訊</h4>
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<tbody>
+				
+					<tr>
+						<td>尚未揭露</td>
+					</tr>
+				
+				
+			</tbody>
+		</table>
+	</div>
+	<br/><h4>公司聯絡方式</h4>
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<tbody>
+				
+					<tr>
+						<td>尚未揭露</td>
+					</tr>
+				
+				
+			</tbody>
+		</table>
+	</div>
+	<br/><h4>員工福利資訊</h4>
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<tbody>
+				
+					<tr>
+						<td>尚未揭露</td>
+					</tr>
+				
+				
+			</tbody>
+		</table>
+	</div>
+	<br/>
+	
+	<h4>化學原料資訊</h4>
+	
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<tbody>
+				<tr>
+					<td>尚未揭露</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	
+	
+	
+	<br/><h4>
+	
+	公司章程(自願公開條文)
+	</h4>
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<tbody>
+				<tr>
+					<td data-title="公司章程" class="large">
+					
+					
+					尚未揭露
+					
+					</td>
+			</tbody>
+		</table>
+	</div>
+	<br/><h4>報表</h4>
+	<div class="table-responsive" id="spTable">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th class="large">序號</th>
+					<th class="large">文件類別</th>
+					<th class="large">年度</th>
+					<th class="large">瀏覽</th>
+				</tr>
+			</thead>
+		
+			<tbody>
+				<tr>
+					<td data-title="序號" class="large">1</td>
+					<td data-title="檔案種類" class="large">
+						
+						資產負債表
+					</td>
+					<td data-title="年度" class="large">
+						&nbsp;
+						
+					</td>
+					<td data-title="下載" class="large">
+						尚未揭露
+						
+					</td>
+				</tr>
+				<tr>
+					<td data-title="序號" class="large">2</td>
+					<td data-title="檔案種類" class="large">
+						
+						損益表
+					</td>
+					<td data-title="年度" class="large">
+						&nbsp;
+						
+					</td>
+					<td data-title="下載" class="large">
+						尚未揭露
+						
+					</td>
+				</tr>
+				<tr>
+					<td data-title="序號" class="large">3</td>
+					<td data-title="檔案種類" class="large">
+						
+						股東權益變動表
+					</td>
+					<td data-title="年度" class="large">
+						&nbsp;
+						
+					</td>
+					<td data-title="下載" class="large">
+						尚未揭露
+						
+					</td>
+				</tr>
+				<tr>
+					<td data-title="序號" class="large">4</td>
+					<td data-title="檔案種類" class="large">
+						
+						現金流量表
+					</td>
+					<td data-title="年度" class="large">
+						&nbsp;
+						
+					</td>
+					<td data-title="下載" class="large">
+						尚未揭露
+						
+					</td>
+				</tr>
+				<tr>
+					<td data-title="序號" class="large">5</td>
+					<td data-title="檔案種類" class="large">
+						
+						營業報告書
+					</td>
+					<td data-title="年度" class="large">
+						&nbsp;
+						
+					</td>
+					<td data-title="下載" class="large">
+						尚未揭露
+						
+					</td>
+				</tr>
+				<tr>
+					<td data-title="序號" class="large">6</td>
+					<td data-title="檔案種類" class="large">
+						
+						公益報告書
+					</td>
+					<td data-title="年度" class="large">
+						&nbsp;
+						
+					</td>
+					<td data-title="下載" class="large">
+						尚未揭露
+						
+					</td>
+				</tr>
+				<tr>
+					<td data-title="序號" class="large">7</td>
+					<td data-title="檔案種類" class="large">
+						
+						企業社會責任報告書
+					</td>
+					<td data-title="年度" class="large">
+						&nbsp;
+						
+					</td>
+					<td data-title="下載" class="large">
+						尚未揭露
+						
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	
+	<br/>
+	<button type="button" class="btn btn-primary" style="margin-left:5px" id="showStatementSP">編輯自行揭露事項</button>&nbsp;<font color="red" id=requireNotice>需工商憑證或公司代表人之自然人憑證</font>
+  
+
+
+								</div>
+								
+								<div class="tab-pane" id="tabHistoryContent">
+									
+
+
+
+<h3>歷史資料<font color="red">(僅提供民國100年後歷史公示資料)</font></h3>
+<div class="table-responsive">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th class="large">序號</th>
+				<th class="large">核准日期</th>
+				<th class="large">統一編號</th>
+				<th class="large">公司名稱</th>
+				<th class="large">資本總額(元)</th>
+				<th class="large">實收資本額(元)</th>
+				<th class="large">公司所在地</th>
+			</tr>
+		</thead>
+		<tbody>
+			
+			
+				<tr><td colspan="7" align="center" >依您的查詢條件，查無符合結果。</td></tr>
+			
+		</tbody>
+	</table>
+	
+</div>
+								</div>
+								
+								<div class="tab-pane" id="tabAdvancedContent">
+									
+
+
+<!-- <h3>公司之法人董監事持股網絡</h3> -->
+<iframe src="https://ipcsa.nat.gov.tw/miv/shareHolder/index?banNo=86317626&amp;token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJmdHMiLCJ2YWlsZCI6dHJ1ZSwiZXhwIjoxNTYwMjYyMDYzfQ.EtmTiuBuw10F_ab3pSlKqN8yrjfFADGOM7bbC0tXh8Q" style="width:100%;height:700px;border:none"></iframe>
+								</div>
+								
+								<div class="tab-pane" id="tabPrintBrCmpyContent" style="display:none">
+									<h3>分公司資料</h3>
+									<div>
+										<div style="display:inline;font-weight: bold">&emsp;序號</div>
+										<div style="display:inline;font-weight: bold">&emsp;統一編號</div>
+										<div style="display:inline;font-weight: bold">&emsp;分公司名稱</div>
+										<div style="display:inline;font-weight: bold">&emsp;公司狀況</div>
+										<div style="display:inline;font-weight: bold">&emsp;分公司核准設立日期</div>
+										<div style="display:inline;font-weight: bold">&emsp;最後核准變更日期</div>
+									</div>
+								</div>
+								
+								<div id="printBrCmpyClone" style="display:none">
+									<div>
+										<div style="display:inline;">&emsp;<span class=" bRn" /></div>
+										<div style="display:inline;">&emsp;<span class=" brBanNo" /></div>
+										<div style="display:inline;">&emsp;<span class=" brName" /></div>
+										<div style="display:inline;">&emsp;<span class=" brStatusDesc" /></div>
+										<div style="display:inline;">&emsp;<span class=" brEstabDate" /></div>
+										<div style="display:inline;">&emsp;<span class=" chgAppDate" /></div>
+									</div>
+								</div>
+								
+								<div id="printBriefCmpyContent" style="display:none">
+									<h3>公司基本資料</h3>
+									<div class="table-responsive">
+					            		<table class="table table-striped">
+					            			<tbody>
+					            				<tr>
+													<td class="txt_td">統一編號</td>
+													<td>
+														
+															86317626&nbsp;&nbsp;
+																											
+														
+													</td>
+												</tr>
+												<tr>
+													<td class="txt_td">公司名稱</td>
+													<td>凰懋有限公司
+													
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>	
+								</div>
+								
+								<div class="table-responsive" id="printSpTable" style="display:none">
+									<table class="table table-striped">
+										<thead>
+											<tr>
+												<th class="large">序號</th>
+												<th class="large">文件類別</th>
+												<th class="large">年度</th>
+											</tr>
+										</thead>
+									
+										<tbody>
+											<tr>
+												<td data-title="序號" class="large">1</td>
+												<td data-title="檔案種類" class="large">
+													
+													資產負債表
+												</td>
+												<td data-title="年度" class="large">
+													&nbsp;
+													
+												</td>
+											</tr>
+											<tr>
+												<td data-title="序號" class="large">2</td>
+												<td data-title="檔案種類" class="large">
+													
+													損益表
+												</td>
+												<td data-title="年度" class="large">
+													&nbsp;
+													
+												</td>
+											</tr>
+											<tr>
+												<td data-title="序號" class="large">3</td>
+												<td data-title="檔案種類" class="large">
+													
+													股東權益變動表
+												</td>
+												<td data-title="年度" class="large">
+													&nbsp;
+													
+												</td>
+											</tr>
+											<tr>
+												<td data-title="序號" class="large">4</td>
+												<td data-title="檔案種類" class="large">
+													
+													現金流量表
+												</td>
+												<td data-title="年度" class="large">
+													&nbsp;
+													
+												</td>
+											</tr>
+											<tr>
+												<td data-title="序號" class="large">5</td>
+												<td data-title="檔案種類" class="large">
+													
+													營業報告書
+												</td>
+												<td data-title="年度" class="large">
+													&nbsp;
+													
+												</td>
+											</tr>
+											<tr>
+												<td data-title="序號" class="large">6</td>
+												<td data-title="檔案種類" class="large">
+													
+													公益報告書
+												</td>
+												<td data-title="年度" class="large">
+													&nbsp;
+													
+												</td>
+											</tr>
+											<tr>
+												<td data-title="序號" class="large">7</td>
+												<td data-title="檔案種類" class="large">
+													
+													企業社會責任報告書
+												</td>
+												<td data-title="年度" class="large">
+													&nbsp;
+													
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div><!-- /.id=content -->
+    					</div><!--col-lg-10-->
+    				</div><!--row-->
+    			</div><!--col-lg-12-->
+    		</div><!--row-->
+    	</div><!--container padding_top-->
+	</div><!--main-->
+	
+
+<div class="container">
+	<div class="row">
+      	<div class="col-lg-12 text-center">
+		<div class="row ">
+		<div class="col-lg-10 col-lg-offset-1">
+  			<nav class="navbar navbar-default" role="navigation">
+			<div class="container-fluid">
+				<!-- Collect the nav links, forms, and other content for toggling -->
+    			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      			<ul class="nav navbar-nav">
+        			<li><a href="javascript:requery();"><span class="glyphicon glyphicon-search"></span>　重新查詢</a></li> 
+    			</ul>
+      			</div><!-- /.navbar-collapse -->
+  			</div><!-- /.container-fluid -->
+  			</nav>
+ 			</div><!-- /.col-lg-8 -->  
+		</div><!-- /.row -->
+	</div>
+       </div> <!-- /.row -->  
+</div><!-- /.container -->
+	
+
+<hr color="#3399FF" size="1"/>
+<div>
+    <a><font color="#FF0000">(備註)</font></a>
+    <ul>
+    	<li>
+    		<font color="#0000FF">
+    			若須查詢該公司是否辦妥營業登記或仍在營業中，因非屬經濟部主管權責，請至<font color="red">財政部稅務入口網</font>「
+	      		<a href="https://www.etax.nat.gov.tw/cbes/web/CBES113W1" target="_blank">
+	      		<font color="#AA2222"><b>營業（稅籍）登記資料公示查詢網站</b></font></a>」查詢。謝謝!
+	      	</font><br><br>
+    	</li>
+    	<li>
+	    	<font color="#0000FF">
+		      	若須查詢該公司依營造業法許可登記之所營事業項目最近異動情形及記錄，因非屬經濟部主管權責，請至<font color="red">內政部營建署-全國建築管理資訊系統入口網</font>「
+		      	<a href="http://cpabm.cpami.gov.tw/SearchPage2.jsp?url=/search/clis/ConsInfo.jsp" target="_blank">
+		      	<font color="#AA2222"><b>營造業-登記資料查詢網站</b></font></a>」查詢。謝謝!
+		    </font><br><br>
+    	</li>
+    	<li>
+	    	<font color="#0000FF">
+		      	若須查詢該公司依公寓大廈管理條例許可登記之所營事業項目最近異動情形及記錄，因非屬經濟部主管權責，請至<font color="red">內政部營建署-全國建築管理資訊系統入口網</font>「
+	      		<a href="http://cpabm.cpami.gov.tw/SearchPage.jsp?url=/search/bma/MMCSearch.jsp" target="_blank">
+	      		<font color="#AA2222"><b>公寓大廈-管理維護公司資料查詢網站</b></font></a>」查詢。謝謝!
+		    </font><br><br>
+    	</li>
+    </ul>
+</div>
+	
+
+<div id="printArea" style="font-size:16px; font-size-adjust:0.58;"></div>
+<div id="printOthersArea" style="font-size:16px; font-size-adjust:0.58;"></div>
+<div id="printSelfPublishArea" style="font-size:16px; font-size-adjust:0.58;"></div>
+	<form id="SubscrAcct_init" name="subscrForm" action="/fts/subscr/SubscrAcct/init.do" method="post">
+		<input type="hidden" name="banNo" value="86317626" id="SubscrAcct_init_banNo"/>
+		<input type="hidden" name="objectId" value="HC86317626" id="SubscrAcct_init_objectId"/>
+	</form>
+
+
+
+		
+
+<div class="modal fade" id="agreeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">聲明書</h4>
+			</div>
+			<div class="modal-body">
+				<span class="color-red"></span>
+				<span style="color:#6495ED">請詳閱<span class="color-red">企業自訂標籤之</span>登載事項聲明書：</span>
+				<br>
+				在閱覽或使用<span class="color-red">企業自訂標籤之</span>登載事項前，請詳讀本聲明所列之事項，按下「同意」鍵後，即表示您已詳讀本聲明所列事項並同意遵守本聲明中所列之全部事項。 
+				<br><br>
+				<table>
+					<tr>
+						<td colspan="2">一、<span style="font-weight:bold">登載權限</span></td>
+					</tr>
+					<tr>
+						<td style="width:20px"><span class="color-red"><span class="glyphicon glyphicon-star"></span></span></td>
+						<td><span class="color-red">持有工商憑證(含正卡或授權之附卡)方可使用企業自訂標籤之登載功能，並視為有權代表公司登載。</span></td>
+					</tr>
+					<tr>
+						<td><span class="glyphicon glyphicon-star"></span></td>
+						<td>憑證以及憑證密碼已妥善保存，且採取有效控管方法，防止第三者竊取或修改。</td>
+					</tr>
+					<tr style="height:15px">
+						<td colspan="2"></td>
+					</tr>
+					<tr>
+						<td colspan="2">二、<span style="font-weight:bold">登載內容</span></td>
+					</tr>
+					<tr>
+						<td><span class="color-red"><span class="glyphicon glyphicon-star"></span></span></td>
+						<td><span class="color-red">經濟部商工登記公示資料查詢服務(以下簡稱「本服務」)企業自訂標籤之登載內容係由本公司提供，未經經濟部審核，其內容僅供民眾參考，並由本公司對企業自訂標籤之登載內容自負法律責任。</span></td>
+					</tr>
+					<tr>
+						<td><span class="color-red"><span class="glyphicon glyphicon-star"></span></span></td>
+						<td><span class="color-red">登載事項如含有虛偽不實、不雅之內容，導致社會大眾誤解、造成他人財產損失或名譽受損， 本公司自負相關刑事與民事責任。</span></td>
+					</tr>
+					<tr>
+						<td><span class="glyphicon glyphicon-star"></span></td>
+						<td>本服務會記錄登載內容之異動資料，對於登載內容，本公司已以工商憑證<span class="color-red">(含正卡或授權之附卡)</span>簽署，對於登載及異動內容均願意承擔所有法律效力與對應責任。</td>
+					</tr>
+					<tr style="height:15px">
+						<td colspan="2"></td>
+					</tr>
+					<tr>
+						<td colspan="2">三、<span style="font-weight:bold">資料安全</span></td>
+					</tr>
+					<tr>
+						<td><span class="glyphicon glyphicon-star"></span></td>
+						<td>本公司了解<span class="color-red">本服務</span>已盡力以安全可靠的技術及程序，保障登載資料之安全，避免遭第三者攔截或修改，此外，在網際網路上傳送登載資料，本公司知悉<span class="color-red">本服務</span>係利用SSL加密保護資料傳輸。</td>
+					</tr>
+					<tr>
+						<td><span class="color-red"><span class="glyphicon glyphicon-star"></span></span></td>
+						<td><span class="color-red">本公司暸解本服務對使用者個人資料收集，謹遵守中華民國「電腦處理個人資料保護法」之規範， 除法律特別規定或經使用者同意外，本服務不會蒐集使用者個人資料。</span></td>
+					</tr>
+					<tr style="height:15px">
+						<td colspan="2"></td>
+					</tr>
+					<tr>
+						<td colspan="2">四、<span style="font-weight:bold">cookie</span></td>
+					</tr>
+					<tr>
+						<td><span class="glyphicon glyphicon-star"></span></td>
+						<td>本公司暸解當使用者瀏覽<span class="color-red">本服務</span>時，<span class="color-red">本服務</span>會放置cookie（一個小小的標示性文字檔案）在使用者所使用的電腦中，這個cookie並不包含足以辨識使用者個人身分的資料， 而是記錄使用者在本網頁中設定的個人服務等資料。<span class="color-red">本服務</span>伺服器僅能讀取使用者cookie中在網站上的活動紀錄，無法讀取使用者在其他網站的活動紀錄。 </td>
+					</tr>
+					<tr style="height:15px">
+						<td colspan="2"></td>
+					</tr>
+					<tr>
+						<td colspan="2">五、<span style="font-weight:bold">連絡資訊</span></td>
+					</tr>
+					<tr>
+						<td><span class="glyphicon glyphicon-star"></span></td>
+						<td>本公司如有任何意見，將洽諮詢專線：412-1166與<span class="color-red">本服務</span>連繫。 </td>
+					</tr>
+					<tr style="height:15px">
+						<td colspan="2"></td>
+					</tr>
+					<tr>
+						<td colspan="2">六、<span style="font-weight:bold">聲明變更</span></td>
+					</tr>
+					<tr>
+						<td><span class="glyphicon glyphicon-star"></span></td>
+						<td>這份登載聲明從同意後開始生效，但因應社會環境及法令規定的變遷與科技進步，<span class="color-red">本服務</span>得隨時修改本份聲明，本公司於該修改聲明更新並公告後，同意受其拘束。</td>
+					</tr>
+				</table>	
+			</div>
+			<div class="modal-footer" style="text-align:center">
+				<label class="checkboxGroup">
+  					<input type="checkbox" id="readStatement">
+  					<span class="checkmark"></span>
+  					<span class="checkmarkText">我已閱讀過聲明書內容，並了解所有聲明書事項。</span>
+				</label>
+				<div id="agreeStatement" style="display:none">
+					<button type="button" class="btn btn-primary" style="margin-top:5px" id="agreeBtn">
+						同意
+					</button>
+					<button type="button" class="btn btn-default" style="margin-top:5px" id="disagreeBtn">
+						不同意
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+		
+
+
+<div class="modal fade" id="agreeModalSP" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">聲明書</h4>
+			</div>
+			<div class="modal-body">
+				<span class="color-red"></span>
+				<span style="color:#6495ED">請詳閱<span class="color-red">公司自行揭露事項</span>聲明書：</span>
+				<br>
+				在閱覽或使用<span class="color-red">公司自行揭露事項之服務</span>前，請詳讀本聲明所列之事項，按下「同意」鍵後，即表示您已詳讀本聲明所列事項並同意遵守本聲明中所列之全部事項。 
+				<br><br>
+				<table>
+					<tr>
+						<td colspan="2">一、<span style="font-weight:bold">登載權限</span></td>
+					</tr>
+					<tr>
+						<td style="width:20px" valign="top"><span class="color-red"><span class="glyphicon glyphicon-star"></span></span></td>
+						<td><span class="color-red">持有本公司工商憑證方可使用公司自行揭露事項之服務，並視為有權代表本公司登載與管理相關資訊。</span></td>
+					</tr>
+					<tr>
+						<td valign="top"><span class="glyphicon glyphicon-star"></span></td>
+						<td>憑證以及憑證密碼已妥善保存，且採取有效控管方法，防止第三者竊取或修改。</td>
+					</tr>
+					<tr style="height:15px">
+						<td colspan="2"></td>
+					</tr>
+					<tr>
+						<td colspan="2">二、<span style="font-weight:bold">登載內容</span></td>
+					</tr>
+					<tr>
+						<td valign="top"><span class="color-red"><span class="glyphicon glyphicon-star"></span></span></td>
+						<td>經濟部商工登記公示資料查詢服務之公司自行揭露事項服務(以下簡稱「自行揭露服務」)<span class="color-red">係為增加公司資訊之透明，所揭露內容均由本公司自願提供且同意公開，經濟部並無審核其內容及擔保該內容真實之責任；其內容僅供民眾參考，並由本公司對揭露事項內容自負法律責任。</span></td>
+					</tr>
+					<tr>
+						<td valign="top"><span class="color-red"><span class="glyphicon glyphicon-star"></span></span></td>
+						<td><span class="color-red">揭露事項如含有個人資料、營業秘密、虛偽不實、違反善良風俗或侵害他人合法權利等內容，導致社會大眾誤解、造成他人財產損失或名譽受損，本公司自負相關法律責任。</span></td>
+					</tr>
+					<tr>
+						<td valign="top"><span class="glyphicon glyphicon-star"></span></td>
+						<td>自行揭露服務會記錄揭露內容之異動資料，對於揭露內容，本公司已以工商憑證簽署，對於揭露或異動內容，本公司均願意承擔所有法律效力與對應責任。<span class="color-red">本公司瞭解並同意登載事項若有上開情事，「經濟部商工入口網」自行發現、經其他有權機關通知、民眾檢舉或經任何方式知悉後，得逕予關閉頁面或刪除一部或全部登載事項內容，本公司若有疑義，應自行洽主管機關、權利人或司法機關尋求爭議解決，不得對「經濟部商工入口網」主張任何權利。</span></td>
+					</tr>
+					<tr style="height:15px">
+						<td colspan="2"></td>
+					</tr>
+					<tr>
+						<td colspan="2">三、<span style="font-weight:bold">資料安全</span></td>
+					</tr>
+					<tr>
+						<td valign="top"><span class="glyphicon glyphicon-star"></span></td>
+						<td>本公司了解<span class="color-red">自行揭露服務</span>已盡力以安全可靠的技術及程序，保障揭露資料之安全，避免遭第三者攔截或修改，且認知到經濟部將持續提升該技術與程序。但仍理解此等技術與程序，仍無法完全消除資安風險。此外，在網際網路上傳送揭露資料，本公司知悉<span class="color-red">本服務</span>係利用SSL加密保護資料傳輸。</td>
+					</tr>
+					<tr style="height:15px">
+						<td colspan="2"></td>
+					</tr>
+					<tr>
+						<td colspan="2">四、<span style="font-weight:bold">資料處理及使用</span></td>
+					</tr>
+					<tr>
+						<td valign="top"><span class="glyphicon glyphicon-star"></span></td>
+						<td>本公司暸解自行揭露服務基於商業行政目的於執行法定職務必要範圍內蒐集本公司所提供之資料，並將本公司自行揭露事項公開提供任何人查詢或利用。本公司若擬停止提供他人利用自行揭露事項相關資訊，得自行移除或刪減。</td>
+					</tr>
+					<tr>
+						<td valign="top"><span class="glyphicon glyphicon-star"></span></td>
+						<td>本公司瞭解自行揭露服務得基於公司違反本聲明書內容或權利人通知，採取移除公司所自行揭露資料及其他必要措施。</td>
+					</tr>
+					<tr style="height:15px">
+						<td colspan="2"></td>
+					</tr>
+					<tr>
+						<td colspan="2">五、<span style="font-weight:bold">小型文字檔案(Cookie)</span></td>
+					</tr>
+					<tr>
+						<td valign="top"><span class="glyphicon glyphicon-star"></span></td>
+						<td>本公司暸解當使用者瀏覽自行揭露服務時，自行揭露服務會放置cookie（一個小小的標示性文字檔案）在使用者所使用的電腦中。這個cookie並不包含足以辨識使用者個人身分的資料，而是記錄使用者在本網頁中設定的個人服務等資料。自行揭露服務伺服器僅能讀取使用者cookie中在網站上的活動紀錄，無法讀取使用者在其他網站的活動紀錄。</td>
+					</tr>
+					<tr style="height:15px">
+						<td colspan="2"></td>
+					</tr>
+					<tr>
+						<td colspan="2">六、<span style="font-weight:bold">連絡資訊</span></td>
+					</tr>
+					<tr>
+						<td valign="top"><span class="glyphicon glyphicon-star"></span></td>
+						<td>本公司如有任何意見，將洽諮詢專線：412-1166向<span class="color-red">自行揭露服務窗口</span>連繫。 </td>
+					</tr>
+				</table>
+				<br/><br/>本公司瞭解「經濟部商工入口網」享有因政策法令規定變動而調整、更改或停止本服務之權利，且無需事先通知本公司。「經濟部商工入口網」得隨時修改本份聲明，本公司同意自聲明更新並公告時起，受其拘束，若本公司拒絕接受更新內容，得自行終止使用。
+				<br/>本聲明內容若有未盡之處，悉以中華民國法律為準，因使用本網站內容而衍生相關爭議，以<span class="color-red">台灣台北地方法院為第一審</span>為管轄權<span class="color-red">法院</span>。
+				<br/><br/>
+			</div>
+			<div class="modal-footer" style="text-align:center">
+				<label class="checkboxGroup">
+  					<input type="checkbox" id="readStatementSP">
+  					<span class="checkmark"></span>
+  					<span class="checkmarkText">我已閱讀過聲明書內容，並了解所有聲明書事項。</span>
+				</label>
+				<div id="agreeStatementSP" style="display:none">
+					<button type="button" class="btn btn-primary" style="margin-top:5px" id="agreeBtnSP">
+						同意
+					</button>
+					<button type="button" class="btn btn-default" style="margin-top:5px" id="disagreeBtnSP">
+						不同意
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	</div>
+    <!-- Page Content END-->
+    <br/>
+    <!-- Footer Content -->
+    <div class="footer_s">
+		
+
+
+
+    <div class="container">
+		
+		<div class="row">
+       
+            <div class="col-lg-12">
+ 				<div class="row">
+            
+	            <div class="col-lg-8 col-lg-offset-2 footer_info">
+	           		中華民國經濟部商業司 / 地址：10015 臺北市福州街15號
+	           		<a href="http://gcis.nat.gov.tw/mainNew/index.jsp" target="_blank" style="color:blue;margin-left:20px">回商業司入口網</a><br/>
+	            	服務時間：星期一~星期五 8:30~17:30 (國定假日除外)<br/>
+					諮詢專線：412-1166，直接撥打毋需加撥區碼 (六碼地區請撥 41-1166)，行動電話請加撥 02<br/>
+					傳真專線：(02)2192-7142<br/>
+					<a href="/fts/version/VersionDetail/versionView.do" target="_blank">版本：v1.3.5</a>|
+					<a href="/fts/version/Govannounce/govannounce.do" target="_blank">政府網站資料開放宣告</a>|
+					<a href="/fts/version/Privacy/privacy.do" target="_blank">隱私權政策</a>|
+					<a href="/fts/version/Security/security.do" target="_blank">網站安全政策</a>
+				</div>
+				 			
+ 				</div>
+ 			</div>
+ 			
+ 		</div>
+ 		
+ 	</div>
+	</div>
+    <!-- Footer Content END-->
+	<form id="detailCallQueryListForm" name="detailCallQueryListForm" action="/fts/query/QueryList/queryList.do" method="post">
+		
+	</form>
+
+
+
+
+	<!-- detailForm	for submit -->
+	<form name="detailForm" action="/fts/query/.do" method="POST">
+		<input type="hidden" name="banNo" value="" id="_banNo"/>
+		<input type="hidden" name="brBanNo" value="" id="_brBanNo"/>
+		<input type="hidden" name="banKey" value="" id="_banKey"/>
+		<input type="hidden" name="estbId" value="" id="_estbId"/>
+		<input type="hidden" name="objectId" value="" id="_objectId"/>
+		<input type="hidden" name="CPage" value="" id="_CPage"/>
+		<input type="hidden" name="brCmpyPage" value="" id="_brCmpyPage"/>
+		<input type="hidden" name="eng" value="false" id="_eng"/>
+		<input type="hidden" name="CPageHistory" value="" id="_CPageHistory"/>
+		<input type="hidden" name="historyPage" value="" id="_historyPage"/>
+		<input type="hidden" name="chgAppDate" value="" id="_chgAppDate"/>
+	</form>
+
+
+
+	
+	<!-- editTag for submit -->
+	<form name="editTagForm" action="/fts/tag/.do" target="_blank" method="POST">
+		<input type="hidden" name="objectId" value="" id="_objectId"/>
+	</form>
+
+
+
+	
+	<!-- edit self publish for identification -->
+	<form name="selfPublishForm" action="/fts/publish/.do" target="_blank" method="POST">
+		<input type="hidden" name="banNo" value="" id="_banNo"/>
+		<input type="hidden" name="orgType" value="" id="_orgType"/>
+		<input type="hidden" name="banKey" value="" id="_banKey"/>
+	</form>
+
+
+
+	<form id="SelfPublish_downloadFile" name="editSelfPublishDLForm" action="/fts/publish/SelfPublish/downloadFile.do" method="post">
+		<input type="hidden" name="banNo" value="86317626" id="banNo"/>
+		<input type="hidden" name="filenameToDl" value="" id="filenameToDl"/>
+	</form>
+
+
+
+	
+	<!-- historyForm for submit -->
+	<form name="historyForm" action="/fts/history/.do" method="POST">
+		<input type="hidden" name="banNo" value="" id="_banNo"/>
+		<input type="hidden" name="brBanNo" value="" id="_brBanNo"/>
+		<input type="hidden" name="cmpyModifNo" value="" id="_cmpyModifNo"/>
+	</form>
+
+
+
+	<!-- egisForm for submit -->
+	<form name="egisForm" action="https://egis.moea.gov.tw/MoeaEGFxData_WebAPI_Inside/WebAPI/Nat" method="POST" target="_blank">
+		<!-- CMPY and Br CMPY and BUSM  and FAC-->
+		<input type="hidden" id = "EDataType" name = "EDataType"/>
+		<input type="hidden" id = "Ban_NO" name = "Ban_NO"/>
+		<input type="hidden" id = "Status" name = "Status"/>
+		<input type="hidden" id = "Name" name = "Name"/>
+		<input type="hidden" id = "Representative_Owner" name = "Representative_Owner"/>
+		<input type="hidden" id = "Addr" name = "Addr"/>
+		<input type="hidden" id = "Approved_Date" name = "Approved_Date"/>
+		<input type="hidden" id = "Last_Approved_Chang_Date" name = "Last_Approved_Chang_Date"/>
+		<!-- CMPY and BUSM and LMTD and FAC-->
+		<input type="hidden" id = "Capital_Amount" name = "Capital_Amount"/>
+		<input type="hidden" id = "Registration_Authority" name = "Registration_Authority"/>
+		<!-- Br CMPY -->
+		<input type="hidden" id = "Parent_Company_Ban_NO" name ="Parent_Company_Ban_NO" />
+		<input type="hidden" id = "Parent_Company_Name" name ="Parent_Company_Name" />
+		<!-- BUSM -->
+		<input type="hidden" id = "RegUnitCode" name ="RegUnitCode" />
+		<!-- BUSM and FAC -->
+		<input type="hidden" id = "Organization_Type" name ="Organization_Type" />
+		<!-- LMTD -->
+		<input type="hidden" id = "Duration" name ="Duration" />
+		<input type="hidden" id = "Last_Approved_Chang_Status" name = "Last_Approved_Chang_Status"/>
+		<input type="hidden" id = "Representative_Name" name = "Representative_Name" />
+		<input type="hidden" id = "General_Partner_Name" name = "General_Partner_Name" />
+		<input type="hidden" id = "Limited_Partner" name = "Limited_Partner" />
+		<input type="hidden" id = "Manager_Name" name = "Manager_Name" />
+		<input type="hidden" id = "Appointment_Dissolution" name = "Appointment_Dissolution" />
+		<!-- LMTD and FAC -->
+		<input type="hidden" id = "Approved_NO" name ="Approved_NO" />
+		<!-- FAC -->
+		<input type="hidden" id = "AgencyCode" name = "AgencyCode" />
+		<input type="hidden" id = "EstbId" name = "EstbId" />
+		<input type="hidden" id = "Setting_Date" name = "Setting_Date" />
+		<input type="hidden" id = "Cancel_Date" name = "Cancel_Date" />
+	</form>
+	
+    <!-- Bootstrap Core JavaScript : important for Language dropdown -->
+    <script type='text/javascript' src='/fts/fts/js/bootstrap.min.js'></script>
+    
+    <!-- Sweet Alert JavaScript : important for alert -->
+    <script type='text/javascript' src='/fts/fts/js/sweetalert.js'></script>
+</body>
+
+</html>
