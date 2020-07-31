@@ -5,8 +5,11 @@ presentation : https://drive.google.com/file/d/1-9wwoZZPWz_EVhi28o-vo9GJOOkK69wL
 ## example
 
 input:鍾 target:佳 
+
 input:佳 target:紋 
+
 input:紋 target:。 
+
 
 ## model 
 
