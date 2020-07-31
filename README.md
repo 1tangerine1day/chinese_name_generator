@@ -4,11 +4,13 @@ presentation : https://drive.google.com/file/d/1-9wwoZZPWz_EVhi28o-vo9GJOOkK69wL
 
 ## example
 * way 1
+
         input:鍾 target:佳 
         input:佳 target:紋 
         input:紋 target:。 
 
 * way 2
+
         input:鍾 target:鍾佳
         input:鍾佳 target:鍾佳紋
         input:鍾佳紋 target:鍾佳紋。
